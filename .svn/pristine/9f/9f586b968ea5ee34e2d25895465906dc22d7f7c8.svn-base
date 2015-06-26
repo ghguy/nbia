@@ -1,0 +1,33 @@
+#service deployment properties
+#Wed Dec 31 10:52:30 EST 2008
+dataService_cqlValidatorClass=gov.nih.nci.cagrid.data.cql.validation.ObjectWalkingCQLValidator
+#gridServiceUrl=http\://localhost\:8080/wsrf/services/cagrid/NCIACoreService
+gridServiceUrl=http\://nciavgriddev5004.nci.nih.gov:18080/wsrf/services/cagrid/NCIACoreService
+cqlQueryProcessorConfig_useGridIdentityLogin=
+dataService_classMappingsFilename=classToQname.xml
+dataService_domainModelValidatorClass=gov.nih.nci.cagrid.data.cql.validation.DomainModelValidator
+cqlQueryProcessorConfig_queryCaseInsensitive=true
+cqlQueryProcessorConfig_staticLoginUsername=
+cqlQueryProcessorConfig_applicationName=ncia-api
+tempZipLocation=/local/home/tomcat5/temp-zip-location/
+#tempZipLocation=c\:/test/
+cqlQueryProcessorConfig_domainTypesInfoFilename=ncia-domainTypesInformation.xml
+sdk4Style_beansJarFileName=ncia-beans.jar
+serverConfigLocation=server-config.wsdd
+nciaPublicGroup=PUBLIC-GRID
+#cqlQueryProcessorConfig_applicationHostName=http\://localhost
+cqlQueryProcessorConfig_applicationHostName=http\://nciavjbossdev5004.nci.nih.gov
+databaseDriver=com.mysql.jdbc.Driver
+cqlQueryProcessorConfig_ormJarName=
+cqlQueryProcessorConfig_useLocalApiFlag=false
+cqlQueryProcessorConfig_useServiceLogin=false
+queryProcessorClass=gov.nih.nci.cagrid.ncia.service.NCIAQueryProcessor
+cqlQueryProcessorConfig_staticLoginPassword=
+dataService_validateDomainModelFlag=false
+databaseDataSource=java:comp/env/nciaDatabase
+#databaseConnectionUrl=jdbc\:mysql\://cbiodb590.nci.nih.gov\:3638/nciadev
+#databaseUser=nciaadmin
+#cqlQueryProcessorConfig_applicationHostPort=59180
+cqlQueryProcessorConfig_applicationHostPort=19080
+#databasePassword=nciA\#112
+dataService_validateCqlFlag=false

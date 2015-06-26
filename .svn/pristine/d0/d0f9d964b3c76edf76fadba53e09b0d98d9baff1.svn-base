@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl"
+                 href="../common/ant2html.xsl"?>
+                 
+<project name="ncia-services-commons" default="run" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+
+  <property file="build-ncia-commons.properties" />
+
+  <property name="common.dir" value="${basedir}/../" />
+  <property name="global.ivy.settings.file" location="${common.dir}/common/ivysettings.xml" />
+  <property name="project.lib.dir" value="${common.dir}/target/lib/ncia-services-commons" />
+  <property name="assembly.jms.dir" value="${basedir}/jms" />
+  <property name="resources.dir" value="${basedir}/resources" />
+  <property name="resources.conf.dir" value="${resources.dir}/conf" /> 
+  <property name="target.dir" value="${common.dir}/target/dist/exploded/ncia-services-commons" />
+  
+  
+  <!-- Paths -->
+  <path id="common.classpath">
+    <fileset dir="${common.dir}/target/lib">
+      <include name="ivy-*.jar" />
+    </fileset>
+  </path>
+
+  <!-- Task definitions -->
+  <taskdef resource="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" classpathref="common.classpath" />
+   
+        
+  <!-- Targets -->
+  <target name="ivy-settings">
+    <ivy:settings file="${global.ivy.settings.file}" />
+  </target>
+
+  <target name="ivy-imagezippingmdb" depends="ivy-settings">
+    <ivy:resolve file="ivy-ncia-imagezippingmdb.xml" conf="default" />
+    <ivy:retrieve conf="default" pattern="${project.lib.dir}/imagezippingmdb/[artifact]-[revision].[ext]" />
+
+    <move todir="${project.lib.dir}/imagezippingmdb">
+      <fileset dir="${project.lib.dir}/imagezippingmdb">
+        <include name="*-working@*.jar" />
+      </fileset>
+      <mapper type="regexp" from="^(.*)\-working\@(.*)\.jar$" to="\1.jar" />
+    </move>
+  </target>
+
+  <!-- Comments Required Here -->
+  <target name="dist-jms" depends="ivy-imagezippingmdb">
+    <delete dir="${assembly.jms.dir}/META-INF" />
+    <mkdir dir="${assembly.jms.dir}/META-INF" />
+    <copy file="${resources.conf.dir}/ejb-jar.xml" tofile="${assembly.jms.dir}/META-INF/ejb-jar.xml" />
+    <copy file="${resources.conf.dir}/jboss.xml" tofile="${assembly.jms.dir}/META-INF/jboss.xml" />
+    <copy file="${resources.conf.dir}/hibernate.properties" tofile="${assembly.jms.dir}/hibernate.properties" />
+
+    
+    <copy file="${resources.conf.dir}/ncia.properties" 
+          tofile="${assembly.jms.dir}/ncia.properties" />
+    <copy file="${resources.conf.dir}/mail.properties" 
+          tofile="${assembly.jms.dir}/mail.properties" />
+
+    <copy file="${resources.conf.dir}/${db_brand}/ncia.hibernate.cfg.xml" 
+          tofile="${assembly.jms.dir}/ncia.hibernate.cfg.xml" />
+ 
+    <!-- Build the MDB JAR.  Only include the minium necessary -->
+    <!-- manifest.mf pulls in ncia-client.jar and ncia.jar in the classpath -->
+    <jar jarfile="${assembly.jms.dir}/imageZippingMDB.jar" compress="false">
+      <fileset dir="${assembly.jms.dir}">
+        <include name="META-INF/ejb-jar.xml" />
+        <include name="META-INF/jboss.xml" />
+        
+        <include name="hibernate.properties"/>
+        <include name="ncia.properties" />
+        <include name="mail.properties" />
+        <include name="ncia.hibernate.cfg.xml" />
+      </fileset>
+      <!-- ivy pulls this down -->
+      <fileset dir="${project.lib.dir}/imagezippingmdb">
+        <include name="*.jar" />
+      </fileset>
+    </jar>
+
+    <copy file="${resources.conf.dir}/ncia-jbossmq-destinations-service.xml" 
+          tofile="${target.dir}/ncia-jbossmq-destinations-service.xml" />
+    <delete dir="${assembly.jms.dir}/META-INF" />
+    <delete file="${assembly.jms.dir}/ncia.properties" />
+    <delete file="${assembly.jms.dir}/mail.properties" />
+    
+    <copy file="${assembly.jms.dir}/imageZippingMDB.jar" 
+          tofile="${target.dir}/imageZippingMDB.jar" overwrite="true" />
+    <copy file="${resources.conf.dir}/ncia-jbossmq-destinations-service.xml" 
+           tofile="${target.dir}/ncia-jbossmq-destinations-service.xml" overwrite="true" />
+           
+  </target>
+
+
+  <target name="run" depends="dist-jms,
+                              -post-clean"/>
+
+
+  <target name="-post-clean">
+    <delete dir="${assembly.jms.dir}" quiet="false" />
+  </target>
+  
+  
+
+</project>
+

@@ -1,0 +1,54 @@
+/**
+* $Id: LatestCurationDateJob.java 11945 2010-01-22 19:53:39Z kascice $
+*
+* $Log: not supported by cvs2svn $
+* Revision 1.1  2007/08/05 21:52:15  bauerd
+* *** empty log message ***
+*
+* Revision 1.1  2007/08/05 21:48:51  bauerd
+* *** empty log message ***
+*
+* Revision 1.5  2007/01/11 22:44:28  dietrich
+* Defect 174
+*
+* Revision 1.4  2006/09/27 20:46:27  panq
+* Reformated with Sun Java Code Style and added a header for holding CVS history.
+*
+*/
+package gov.nih.nci.ncia.newresults;
+
+import gov.nih.nci.ncia.dao.ImageDAO;
+import gov.nih.nci.ncia.factories.ApplicationFactory;
+
+import java.util.Date;
+
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+
+
+public class LatestCurationDateJob implements Job {
+    
+    /**
+     * This method allows this class to be called as a Job using Quartz
+     */
+    public void execute(JobExecutionContext jec) {
+
+        try {   
+        	// 	Cache the latest date
+        	ApplicationFactory.getInstance().setLatestCurationDate(getLatestCurationDate());
+        }
+        catch(Exception ex) {
+        	throw new RuntimeException(ex);
+        }
+    }
+    
+    /**
+     * Retrieves the maximum curation status date
+     *
+     * @throws Exception
+     */
+    public Date getLatestCurationDate() throws Exception {       
+        ImageDAO imageDAO = new ImageDAO();
+        return imageDAO.findLastCurationDate();
+    }
+}

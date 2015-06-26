@@ -1,0 +1,292 @@
+<?xml version="1.0"?>
+<project name="Developer Modified Build File" basedir="." xmlns:ivy="antlib:org.apache.ivy.ant">
+  <!-- ============================================================== -->
+  <!-- This file is designed to allow the developer to extend the     -->
+  <!-- build process without having to edit the master build.xml      -->
+  <!-- file. DO NOT REMOVE ANY TARGETS                                -->
+  <!-- ============================================================== -->
+
+
+  <!-- ============================================================== -->
+  <!-- Place any other properties you will need here                  -->
+  <!-- ============================================================== -->
+  
+  <taskdef resource="net/sf/antcontrib/antlib.xml">
+    <classpath>
+      <pathelement location="${tools.lib.dir}/ant-contrib.jar" />
+    </classpath>
+  </taskdef>
+  <!--import developers targets and properties (which can be overridden)-->
+  <if>
+    <isset property="ci.server"/>
+    <then>
+      <import file="unittesting-integration.xml" />
+    </then>
+    <else>
+      <import file="testing-placeholder.xml" />
+    </else>
+  </if> 
+
+
+  <!-- ============================================================== -->
+  <!-- Create any extended Classpaths here                            -->
+  <!-- ============================================================== -->
+  <target name="defineExtendedClasspaths">
+    <path id="base.extended.classpath">
+    </path>
+    <path id="service.build.extended.classpath">
+    </path>
+    <path id="service.run.extended.classpath">
+    </path>
+    <path id="test.build.extended.classpath">
+    </path>
+    <path id="test.run.extended.classpath">
+    </path>
+    <path id="run.extended.classpath">
+    </path>
+    <path id="tasks.run.extended.classpath">
+    </path>
+  </target>
+
+
+  <!-- ============================================================== -->
+  <!-- Pre Init Target                                                -->
+  <!-- ============================================================== -->
+  <target name="preInit">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Init Build Target                                         -->
+  <!-- ============================================================== -->
+  <target name="postInit">
+
+  </target>
+
+
+  <!-- ============================================================== -->
+  <!-- Pre Stubs Target                                               -->
+  <!-- ============================================================== -->
+  <target name="preStubs">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Stubs Build Target                                        -->
+  <!-- ============================================================== -->
+  <target name="postStubs">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Compile Stubs Build Target                                 -->
+  <!-- ============================================================== -->
+  <target name="preCompileStubs">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Compile Stubs Build Target                                -->
+  <!-- ============================================================== -->
+  <target name="postCompileStubs">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Jar Stubs Build Target                                     -->
+  <!-- ============================================================== -->
+  <target name="preJarStubs">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Jar Stubs Build Target                                    -->
+  <!-- ============================================================== -->
+  <target name="postJarStubs">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Compile Build Target                                       -->
+  <!-- ============================================================== -->
+  <target name="preCompile">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Compile Build Target                                       -->
+  <!-- ============================================================== -->
+  <target name="postCompile">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Jar Build Target                                       -->
+  <!-- ============================================================== -->
+  <target name="preJar">
+
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Jar Build Target                                          -->
+  <!-- ============================================================== -->
+  <target name="postJar">
+    <!-- just core-grid-transfer client classpath -->
+    <zip destfile="client-jars-nodeps.zip">
+      <fileset dir="lib">
+        <include name="ncia-beans.jar" />        
+      </fileset>  
+      <fileset dir="build/lib">        
+        <include name="NCIACoreService-*.jar" />
+        <exclude name="NCIACoreService-tests.jar" />
+      </fileset>              
+    </zip>  
+    
+    
+    <!-- full client classpath -->
+    <zip destfile="client-jars-full.zip">
+      <fileset dir="lib">
+        <include name="ncia-beans.jar" />
+      </fileset>  
+      <fileset dir="build/lib">        
+        <include name="NCIACoreService-*.jar" />
+        <exclude name="NCIACoreService-tests.jar" />
+      </fileset>
+      
+      <fileset dir="${ext.globus.dir}/lib">
+        <include name="addressing-1.0.jar"/>
+        <include name="addressing-1.0.jar"/>
+        <include name="axis.jar"/>
+        <include name="cog-axis.jar"/>
+        <include name="cog-jglobus.jar"/>
+        <include name="commons-discovery.jar"/>                
+        <include name="commons-logging.jar"/>
+        <include name="jaxrpc.jar"/>
+        <include name="jce-jdk13-125.jar"/>
+        <include name="saaj.jar"/>
+        <include name="wsdl4j.jar"/>
+        <include name="wsrf_core.jar"/>
+        <include name="wsrf_core_stubs.jar"/>
+        <include name="wss4j.jar"/>        
+      </fileset>   
+         
+      <fileset dir="lib">  
+        <include name="caGrid-ServiceSecurityProvider-client-1.2.jar"/>
+        <include name="caGrid-ServiceSecurityProvider-common-1.2.jar"/>
+        <include name="caGrid-ServiceSecurityProvider-service-1.2.jar"/>
+        <include name="caGrid-ServiceSecurityProvider-stubs-1.2.jar"/>
+        <include name="caGrid-Transfer-client-1.2.jar"/>
+        <include name="caGrid-Transfer-common-1.2.jar"/>
+        <include name="caGrid-Transfer-service-1.2.jar"/>
+        <include name="caGrid-Transfer-stubs-1.2.jar"/>
+        <include name="caGrid-Transfer-tests-1.2.jar"/>
+        <include name="caGrid-data-common-1.2.jar"/>
+        <include name="caGrid-data-cql-1.2.jar"/>
+        <include name="caGrid-data-service-1.2.jar"/>
+        <include name="caGrid-data-stubs-1.2.jar"/>
+        <include name="caGrid-data-tools-1.2.jar"/>
+        <include name="caGrid-data-utils-1.2.jar"/>
+        <include name="caGrid-data-validation-1.2.jar"/>
+        <include name="caGrid-metadata-common-1.2.jar"/>
+        <include name="caGrid-metadata-data-1.2.jar"/>
+        <include name="caGrid-metadata-security-1.2.jar"/>
+        <include name="caGrid-metadatautils-1.2.jar"/>
+        <include name="caGrid-sdkQuery4-beans-1.2.jar"/>
+        <include name="caGrid-sdkQuery4-processor-1.2.jar"/>
+        <include name="caGrid-sdkQuery4-style-1.2.jar"/>
+        <include name="caGrid-sdkQuery4-tests-1.2.jar"/>
+        <include name="caGrid-sdkQuery4-tests-resources-1.2.jar"/>
+        <include name="commons-httpclient-3.0.jar"/>      
+        <include name="iviCore-1.2dev.jar"/>
+      </fileset>
+    </zip>
+    
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Compile Tests Build Target                                 -->
+  <!-- ============================================================== -->
+  <target name="preCompileTests" depends="ivy-test">
+    <!-- copy all the unit testing stuff for the compile.  heavy handed only need mockrunner.  rethink this --> 
+
+    <if>
+      <isset property="ci.server"/>
+      <then>    
+      <copy toDir="${test.lib.dir}">
+        <fileset dir="${project.lib.dir}/test" casesensitive="yes">
+          <include name="*.*" />
+        </fileset>
+
+      </copy>
+      <!-- for find bugs -->
+      <mkdir dir="${project.lib.dir}/compile"/>
+      <copy toDir="${project.lib.dir}/compile">
+        <fileset dir="lib" casesensitive="yes">
+          <include name="*.jar" />
+        </fileset>
+
+      </copy>    
+      </then>
+    </if>
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Compile Tests Build Target                                -->
+  <!-- ============================================================== -->
+  <target name="postCompileTests" depends="test, inspect">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Jar Tests Build Target                                     -->
+  <!-- ============================================================== -->
+  <target name="preJarTests">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Jar Tests Build Target                                    -->
+  <!-- ============================================================== -->
+  <target name="postJarTests">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Pre Clean Target                                               -->
+  <!-- ============================================================== -->
+  <target name="preClean">
+
+  </target>
+
+  <!-- ============================================================== -->
+  <!-- Post Clean Target                                              -->
+  <!-- ============================================================== -->
+  <target name="postClean">
+
+  </target>
+
+
+  <!-- ============================================================== -->
+  <!-- Call any tests.                                                -->
+  <!-- ============================================================== -->
+  <!-- replaced by something in unittesting.xml -->
+  <!--
+  <target name="test" depends="checkGlobus" description="Runs the service's tests.">
+    <echo message="Test results dir: ${junit.results.dir}" />
+    <mkdir dir="${junit.results.dir}" />
+    <junit dir="${basedir}" printsummary="yes" showoutput="true">
+      <classpath refid="test.run.classpath" />
+      <formatter type="xml" />
+      <batchtest fork="yes" todir="${junit.results.dir}">
+        <fileset dir="${test.src.dir}">
+          <include name="**/Test*.java" />
+          <include name="**/*TestCase.java" />
+        </fileset>
+      </batchtest>
+    </junit>
+  </target>
+  -->
+
+</project>

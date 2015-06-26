@@ -1,0 +1,11 @@
+#Introduce Properties
+#Wed Dec 31 10:52:20 EST 2008
+introduce.skeleton.services.list=NCIACoreService
+introduce.skeleton.extensions=cagrid_metadata,data,caGrid_Transfer
+introduce.skeleton.timestamp=1230311745630
+introduce.skeleton.service.name=NCIACoreService
+introduce.skeleton.resource.options=main,singleton,identifiable,resourcePropertyManagement
+introduce.skeleton.destination.dir=C\:\\dev\\ncia_workspace\\4.2\\ncia-grid-service-new
+introduce.skeleton.namespace.domain=http\://ncia.cagrid.nci.nih.gov/NCIACoreService
+introduce.ns.excludes=\ -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.service -x http\://transfer.cagrid.org/Transfer -x http\://transfer.cagrid.org/TransferService/Context/types -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata -x gme\://caCORE.caCORE/4.0/gov.nih.nci.ncia.domain -x http\://gov.nih.nci.cagrid.data/DataServiceExceptions -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.security -x gme\://caGrid.caBIG/1.0/gov.nih.nci.cagrid.metadata.common
+introduce.soap.binding.excludes=\ gme\://caCORE.caCORE/4.0/gov.nih.nci.ncia.domain

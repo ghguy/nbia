@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="gov.nih.nci.ncia.internaldomain">
+	<class name="GridNode" table="grid_node" lazy="true" polymorphism="explicit">
+		<cache usage="read-write" />
+		<id name="id" type="integer" column="grid_node_pk_id">
+			<generator class="assigned" />
+		</id>
+		<!-- Attributes mapping for the GridNode class -->
+		<property name="nodeDescription" type="string" column="node_description"/>
+		<property name="nodeName" type="string" column="node_name"/>
+		<property name="url" type="string" column="url"/>
+	</class>
+</hibernate-mapping>
